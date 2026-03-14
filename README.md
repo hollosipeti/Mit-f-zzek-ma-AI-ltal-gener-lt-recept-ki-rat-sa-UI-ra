@@ -17,6 +17,10 @@ Másold be ezt a szöveget az OpenAI Conversation integráció utasítás (promp
 Ha akarod még kiegészítheted ezekkel is: 
 #### Important: Do NOT read the full recipe out loud. Verbally, you must reply ONLY with this short confirmation in Hungarian: "A kért receptet megjelenítettem a telefonodon." ####
 
+Nálam így néz ki:
+
+![matrix](5.jpg)
+
 ### 2. A Script létrehozása ### 
 
 Ezt fogja meghívni az OpenAI. A script annyit csinál, hogy fogadja a szöveget, és egy eseményként (event) elküldi a Home Assistant rendszerébe, amit majd a szenzor elkap. Ne felejtsd el bepipálni ezt a scriptet az OpenAI agent "Engedélyezett eszközök" (Exposed entities/tools) listájában!
