@@ -12,7 +12,61 @@ Ehhez egy eseményvezérelt (trigger-based) Template Senzort fogunk használni. 
 Nálunk kétfajta OpenAI Conversation van. Egy angol és egy magyar. Itt most a magyar OpenAI Conversation beállításait irom le. 
 Másold be ezt a szöveget az OpenAI Conversation integráció utasítás (prompt) mezőjébe:
 
-### When the user asks for a recipe, generate the complete recipe including ingredients and step-by-step instructions. You MUST use the available tool/script named 'Show recipe on ui' to pass the full text of this recipe to the dashboard. ###
+#### When the user asks for a recipe, generate the complete recipe including ingredients and step-by-step instructions. You MUST use the available tool/script named 'Show recipe on ui' to pass the full text of this recipe to the dashboard. ####
 
 Ha akarod még kiegészítheted ezekkel is: 
-### Important: Do NOT read the full recipe out loud. Verbally, you must reply ONLY with this short confirmation in Hungarian: "A kért receptet megjelenítettem a telefonodon." ###
+#### Important: Do NOT read the full recipe out loud. Verbally, you must reply ONLY with this short confirmation in Hungarian: "A kért receptet megjelenítettem a telefonodon." ####
+
+### 2. A Script létrehozása ### 
+
+Ezt fogja meghívni az OpenAI. A script annyit csinál, hogy fogadja a szöveget, és egy eseményként (event) elküldi a Home Assistant rendszerébe, amit majd a szenzor elkap. Ne felejtsd el bepipálni ezt a scriptet az OpenAI agent "Engedélyezett eszközök" (Exposed entities/tools) listájában!
+
+```yaml
+alias: Show recipe on ui
+description: Ezt hívja meg az OpenAI, hogy átadja a receptet.
+sequence:
+  - event: update_recipe_display
+    event_data:
+      recipe_content: "{{ recipe_text }}"
+mode: single
+fields:
+  recipe_text:
+    selector:
+      text:
+        multiline: true
+    name: Recipe text
+    description: The full text of the generated recipe.
+    required: true
+
+```
+
+### 3. A Template Senzor létrehozása (configuration.yaml) ### 
+Ezt a kódot a Home Assistantod configuration.yaml fájljába kell bemásolnod. Ez hozza létre a szenzort, ami figyel egy egyedi eseményre, és eltárolja a hosszú receptet az attribútumában. (Ne felejtsd el újraindítani a Home Assistantot a módosítás után!)
+
+```yaml
+
+template:
+  - trigger:
+      - trigger: event
+        event_type: update_recipe_display
+    sensor:
+      - name: "Konyhai Recept"
+        unique_id: konyhai_recept_tarolo
+        state: "{{ now().strftime('%H:%M') }}"
+        attributes:
+          recept_szoveg: "{{ trigger.event.data.recipe_content }}"
+
+```
+
+### 4. A Dashboard Kártya (Lovelace UI) ### 
+
+A konyhai tableted/telefonod dashboardjára tegyél ki egy Markdown kártyát. Ez a kártya kiolvassa a szenzor attribútumát, és megjeleníti a szöveget.
+
+```yaml
+
+type: markdown
+title: 👨‍🍳 Napi Recept
+content: >-
+  {{ state_attr('sensor.konyhai_recept', 'recept_szoveg') | default('Még nincs megjelenítendő recept. Kérj egyet a hangasszisztenstől!', true) }}
+
+```
