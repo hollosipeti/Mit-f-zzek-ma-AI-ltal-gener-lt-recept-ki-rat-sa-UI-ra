@@ -19,7 +19,7 @@ Ha akarod még kiegészítheted ezekkel is:
 
 Nálam így néz ki:
 
-![matrix](5.jpg)
+<img src="1.png" width="50%">
 
 ### 2. A Script létrehozása ### 
 
@@ -74,3 +74,11 @@ content: >-
   {{ state_attr('sensor.konyhai_recept', 'recept_szoveg') | default('Még nincs megjelenítendő recept. Kérj egyet a hangasszisztenstől!', true) }}
 
 ```
+
+### Hogyan működik? ### 
+
+Amikor kérsz egy receptet, az OpenAI meghívja a Show recipe on ui scriptet. A script elindít egy update_recipe_display nevű belső eseményt a recept szövegével. A Template Senzor ezt azonnal észreveszi, elmenti magába a szöveget, a dashboardon lévő Markdown kártya pedig abban a pillanatban frissül. Stabil, natív, és nem kell hozzá semmilyen külső bővítmény!
+
+### És az eredmény a telefonomon: ### 
+
+<img src="5.jpg" width="50%">
