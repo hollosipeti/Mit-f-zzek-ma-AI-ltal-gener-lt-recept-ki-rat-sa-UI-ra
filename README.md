@@ -12,7 +12,7 @@ Ehhez egy eseményvezérelt (trigger-based) Template Senzort fogunk használni. 
 Nálunk kétfajta OpenAI Conversation van. Egy angol és egy magyar. Itt most a magyar OpenAI Conversation beállításait irom le. 
 Másold be ezt a szöveget az OpenAI Conversation integráció utasítás (prompt) mezőjébe:
 
-#### When the user asks for a recipe, generate the complete food recipe including ingredients and step-by-step instructions. You MUST use the available tool/script named 'Show recipe on ui' to pass the full text of this recipe to the dashboard. ####
+#### When the user asks for a food recipe, generate the complete recipe including ingredients and step-by-step instructions. You MUST use the available tool/script named 'Show recipe on ui' to pass the full text of this recipe to the dashboard. ####
 
 Ha akarod még kiegészítheted ezekkel is: 
 #### Important: Do NOT read the full recipe out loud. Verbally, you must reply ONLY with this short confirmation in Hungarian: "A kért receptet megjelenítettem a telefonodon." ####
