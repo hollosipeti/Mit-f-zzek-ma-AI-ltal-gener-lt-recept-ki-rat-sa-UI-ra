@@ -19,7 +19,7 @@ Ha akarod még kiegészítheted ezekkel is:
 
 Nálam így néz ki:
 
-<img src="1.png" width="70%">
+<img src="1.png" width="60%">
 
 ### 2. A Script létrehozása ### 
 
@@ -81,10 +81,10 @@ Amikor kérsz egy receptet, az OpenAI meghívja a Show recipe on ui scriptet. A 
 
 ### És az eredmény a telefonomon: ### 
 
-Teljesen valíd a recept. Nem mondtam neki, hogy milyen legyen a rakott krumpli. Csak kértem egy receptet és adott. Google első találat:
+Teljesen valíd a recept. Nem mondtam neki, hogy milyen legyen a rakott krumpli. Csak kértem egy receptet és adott. Google találat:
 https://www.nosalty.hu/recept/rakott-burgonya-daralt-hussal
 
-<img src="5.jpg" width="50%">
+<img src="5.jpg" width="40%"> <img src="2.jpg" width="40%">
 
 ### Megjelenítés egy táblagépen (Fully Kiosk):  ### 
 
