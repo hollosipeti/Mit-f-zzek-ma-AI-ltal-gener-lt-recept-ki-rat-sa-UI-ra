@@ -19,7 +19,7 @@ Ha akarod még kiegészítheted ezekkel is:
 
 Nálam így néz ki:
 
-<img src="1.png" width="60%">
+<img src="ai.png" width="60%">
 
 ### 2. A Script létrehozása ### 
 
