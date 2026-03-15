@@ -94,7 +94,7 @@ Amikor kérsz egy receptet, az OpenAI meghívja a Show recipe on ui scriptet. A 
 Teljesen valíd a recept. Nem mondtam neki, hogy milyen legyen a rakott krumpli. Csak kértem egy receptet és adott. Google találat:
 https://www.nosalty.hu/recept/rakott-burgonya-daralt-hussal
 
-<img src="rk.png" width="40%"> <img src="tt.png" width="40%">
+<img src="rk.png" width="45%"> <img src="tt.png" width="45%">
 
 ## Megjelenítés egy táblagépen (Fully Kiosk):  ##
 
@@ -155,15 +155,14 @@ Hozd létre ezt a scriptet:
 
 ```yaml
 
-alias: Recept elküldése e-mailben
+alias: Send send recipe by email
 icon: mdi:email-send
 sequence:
   - action: notify.recept_kuldod
     data:
-      title: "👨‍🍳 Konyhai Asszisztens: Új recept mentve!"
-      message: >-
-        Szia! Íme a legutóbb kért recept a konyhából:
-
+      title: "👨‍🍳 Recept: {{ state_attr('sensor.konyhai_recept', 'recept_neve') }}"
+      message: |-
+        Íme a kért recept:
         {{ state_attr('sensor.konyhai_recept', 'recept_szoveg') }}
 mode: single
 
@@ -173,4 +172,4 @@ mode: single
 
 Végül menj arra az oldalra, ahol a receptet kiíratod, szerkeszd a dashboardot, és adj hozzá egy tettszőleges a gomb (Button) kártyát pontosan a Markdown kártyád (a recept szövege) alá. Nálam két gomb van. Két felé is tudok küldeni:
 
-<img src="3.png" width="40%">
+<img src="send.png" width="50%">
