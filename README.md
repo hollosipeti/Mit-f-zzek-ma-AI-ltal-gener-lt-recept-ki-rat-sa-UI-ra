@@ -79,9 +79,9 @@ A konyhai tableted/telefonod dashboardjára tegyél ki egy Markdown kártyát. E
 
 type: markdown
 content: >-
-  {{ state_attr('sensor.konyhai_recept', 'recept_neve') }} {{
-  state_attr('sensor.konyhai_recept', 'recept_szoveg') | default('Még nincs
-  megjelenítendő recept. Kérj egyet a hangasszisztenstől!', true) }}
+  ## 👨‍🍳 {{ state_attr('sensor.konyhai_recept', 'recept_neve') | default('Új recept', true) }}
+
+  {{ state_attr('sensor.konyhai_recept', 'recept_szoveg') | default('Még nincs megjelenítendő recept. Kérj egyet a hangasszisztenstől!', true) }}
 
 ```
 
