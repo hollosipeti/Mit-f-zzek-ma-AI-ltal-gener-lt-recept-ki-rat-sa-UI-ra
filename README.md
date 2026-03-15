@@ -82,3 +82,29 @@ Amikor kérsz egy receptet, az OpenAI meghívja a Show recipe on ui scriptet. A 
 ### És az eredmény a telefonomon: ### 
 
 <img src="5.jpg" width="50%">
+
+### Megjelenítés egy táblagépen (Fully Kiosk):  ### 
+
+Ez az automatizáció azt csinálja, hogy, ha recept érkezik bakapcsolja a kijelzőt ( nálam ki szokott kapcsolni ), és a lovelace-tablet/whatshouldIcooktoday oldalra vált, ahol megjeleníti a 4. pontban leírt type: markdown kártyát. 
+### FONTOS: A device_id:, entity_id: és az URL címet ki kell cserélni a saját eszközödnek/url címednek megfelelőre! ###
+
+```yaml
+
+alias: "Kitchen Tablet: Switch to recipe view"
+description: Automatikusan a receptes dashboardra vált, ha új recept érkezik.
+triggers:
+  - trigger: event
+    event_type: update_recipe_display
+actions:
+  - type: turn_on
+    device_id: 683bee5a4c990541d620d1ac308a664d
+    entity_id: 81ab42e08499ee044332a48b8308f896
+    domain: switch
+  - action: fully_kiosk.load_url
+    metadata: {}
+    data:
+      device_id: 683bee5a4c990541d620d1ac308a664d
+      url: http://192.168.24.90:8123/lovelace-tablet/whatshouldIcooktoday
+mode: single
+
+```
