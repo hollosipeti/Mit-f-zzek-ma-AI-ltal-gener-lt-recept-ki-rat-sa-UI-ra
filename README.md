@@ -173,14 +173,27 @@ Hozd létre ezt a scriptet:
 
 ```yaml
 
-alias: Send send recipe by email
+alias: Send recipe by email
 icon: mdi:email-send
 sequence:
   - action: notify.recept_kuldod
     data:
       title: "👨‍🍳 Recept: {{ state_attr('sensor.konyhai_recept', 'recept_neve') }}"
-      message: |-
+      message: >-
         Íme a kért recept:
+
+        📊 Becsült tápérték az egész ételre:
+
+        🔥 Kalória: {{ state_attr('sensor.konyhai_recept', 'kaloria') |
+        default('Nincs adat', true) }}
+
+        🍞 Szénhidrát: {{ state_attr('sensor.konyhai_recept', 'szenhidrat') |
+        default('Nincs adat', true) }}
+
+
+        -------------------------------------------
+
+
         {{ state_attr('sensor.konyhai_recept', 'recept_szoveg') }}
 mode: single
 
