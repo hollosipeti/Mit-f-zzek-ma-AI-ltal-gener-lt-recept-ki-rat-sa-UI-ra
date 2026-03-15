@@ -1,4 +1,4 @@
-# Mit főzzek ma. AI által generált recept kiíratása UI-ra. Ha tettszik elküldeni e-mailban.
+# Mit főzzek ma. AI által generált recept kiíratása UI-ra. Ha tettszik küld el e-mailban.
 Garantáltan asszonyfaktor növelő elem a Home Assistantba :smile:
 
 Nálunk a HA-ba már egy ideje be van integrálva az OpenAI. Próbálom sulykolni a családot, hogy használják, kérdezzenek tőle. Azt is mondtam a feleségemnek, hogy ha nincs ötlete, hogy mit főzzön kérdezze meg az AI-t, hogy van e valami jó ötlete. Ez idáig ok. Az AI elmondja a receptet, el is ismételheti, de szar mindig kérdezgetni, ha elfelejtesz valamit. Azt akartam megoldani, hogy a receptet a dashboard egy meghatározott helyére írja ki. Így főzés közben bármikor visszanézhető az utoljára kért recept. 
@@ -170,6 +170,6 @@ mode: single
 
 ### 3. Lépés: A Gomb hozzáadása a Dashboardhoz ### 
 
-Végül menj arra az oldalra, ahol a receptet kiíratod, szerkeszd a dashboardot, és adj hozzá egy tettszőleges a gomb (Button) kártyát pontosan a Markdown kártyád (a recept szövege) alá. Nálam két gomb van. Két felé is tudok küldeni:
+Végül menj arra az oldalra, ahol a receptet kiíratod, szerkeszd a dashboardot, és adj hozzá egy tettszőleges a gomb (Button) kártyát pontosan a Markdown kártyád (a recept szövege) alá. Ez a gomb indítsa el a fenti scriptet. Nálam két gomb van. Két felé is tudok küldeni:
 
 <img src="send.png" width="50%">
