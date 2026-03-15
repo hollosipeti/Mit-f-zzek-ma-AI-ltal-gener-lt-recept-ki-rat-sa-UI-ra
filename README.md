@@ -81,6 +81,9 @@ Amikor kérsz egy receptet, az OpenAI meghívja a Show recipe on ui scriptet. A 
 
 ### És az eredmény a telefonomon: ### 
 
+Teljesen valíd a recept. Nem mondtam neki, hogy milyen legyen a rakott krumpli. Csak kértem egy receptet és adott. Google első találat:
+https://www.nosalty.hu/recept/rakott-burgonya-daralt-hussal
+
 <img src="5.jpg" width="50%">
 
 ### Megjelenítés egy táblagépen (Fully Kiosk):  ### 
