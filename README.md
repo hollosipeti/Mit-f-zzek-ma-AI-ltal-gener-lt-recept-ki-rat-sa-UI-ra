@@ -1,4 +1,4 @@
-# Mit főzzek ma. AI által generált recept kiíratása UI-ra
+# Mit főzzek ma. AI által generált recept kiíratása UI-ra. Ha tettszik elküldeni e-mailban.
 Garantáltan asszonyfaktor növelő elem a Home Assistantba :smile:
 
 Nálunk a HA-ba már egy ideje be van integrálva az OpenAI. Próbálom sulykolni a családot, hogy használják, kérdezzenek tőle. Azt is mondtam a feleségemnek, hogy ha nincs ötlete, hogy mit főzzön kérdezze meg az AI-t, hogy van e valami jó ötlete. Ez idáig ok. Az AI elmondja a receptet, el is ismételheti, de szar mindig kérdezgetni, ha elfelejtesz valamit. Azt akartam megoldani, hogy a receptet a dashboard egy meghatározott helyére írja ki. Így főzés közben bármikor visszanézhető az utoljára kért recept. 
@@ -111,3 +111,56 @@ actions:
 mode: single
 
 ```
+### Tettszik a recept? Küld el magadnak e-mailban. ### 
+
+### 1. Lépés: E-mail küldő (SMTP) beállítása (configuration.yaml) ### 
+
+Ha még nem küldtél e-mailt a Home Assistantból, be kell állítanod egy küldő fiókot a configuration.yaml fájlban. Például Gmail.
+
+#### Fontos: A Gmailhez egy úgynevezett "Alkalmazásjelszót" (App Password) kell generálnod a Google fiókod biztonsági beállításainál, a sima jelszavad nem lesz jó! ####
+
+Másold be ezt a configuration.yaml-be és indítsd újra a HA-t:
+
+```yaml
+
+notify:
+  - name: "recept_kuldod"
+    platform: smtp
+    server: "smtp.gmail.com"
+    port: 587
+    timeout: 15
+    sender: "sajat.email@gmail.com"
+    encryption: starttls
+    username: "sajat.email@gmail.com"
+    password: "ide_jon_a_general_alkalmazasjelszo"
+    recipient: "sajat.email@gmail.com" # Ide küldi a receptet
+    sender_name: "Konyhai Asszisztens"
+
+```
+### 2. Lépés: A Mentés Script létrehozása ### 
+   
+Csinálnunk kell egy scriptet, ami kiolvassa a receptet abból a szenzorból, amit korábban létrehoztunk, és elküldi az e-mailt.
+
+Hozd létre ezt a scriptet:
+
+```yaml
+
+alias: Recept elküldése e-mailben
+icon: mdi:email-send
+sequence:
+  - action: notify.recept_kuldod
+    data:
+      title: "👨‍🍳 Konyhai Asszisztens: Új recept mentve!"
+      message: >-
+        Szia! Íme a legutóbb kért recept a konyhából:
+
+        {{ state_attr('sensor.konyhai_recept', 'recept_szoveg') }}
+mode: single
+
+```
+
+### 3. Lépés: A Gomb hozzáadása a Dashboardhoz ### 
+
+Végül menj arra az oldalra, ahol a receptet kiíratod, szerkeszd a dashboardot, és adj hozzá egy tettszőleges a gomb (Button) kártyát pontosan a Markdown kártyád (a recept szövege) alá. Nálam két gomb van. Két felé is tudok küldeni:
+
+<img src="3.png" width="40%">
