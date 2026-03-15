@@ -12,7 +12,7 @@ Ehhez egy eseményvezérelt (trigger-based) Template Senzort fogunk használni. 
 Nálunk kétfajta OpenAI Conversation van. Egy angol és egy magyar. Itt most a magyar OpenAI Conversation beállításait irom le. 
 Másold be ezt a szöveget az OpenAI Conversation integráció utasítás (prompt) mezőjébe:
 
-#### When the user asks for a food recipe, generate the complete recipe including ingredients and step-by-step instructions. You MUST use the available tool/script named 'Show recipe on ui' to pass the dish's name to the 'recipe_name' field, and the full text to the 'recipe_text' field. ####
+#### When the user asks for a food recipe, generate the complete recipe including ingredients and step-by-step instructions. You MUST use the available tool/script named 'Show recipe on ui' to pass the dish's name to 'recipe_name', the full text to 'recipe_text', and estimate the approximate calories (kcal) and carbohydrates (g) for the whole meal, passing them to 'calories' and 'carbs' fields. ####
 
 Ha akarod még kiegészítheted ezekkel is: 
 #### Important: Do NOT read the full recipe out loud. Verbally, you must reply ONLY with this short confirmation in Hungarian: "A kért receptet megjelenítettem a telefonodon." ####
@@ -34,6 +34,8 @@ sequence:
     event_data:
       recipe_name: "{{ recipe_name }}"
       recipe_content: "{{ recipe_text }}"
+      calories: "{{ calories }}"
+      carbs: "{{ carbs }}"
 mode: single
 fields:
   recipe_name:
@@ -49,6 +51,16 @@ fields:
     name: Recipe text
     description: The full text of the generated recipe.
     required: true
+  calories:
+    selector:
+      text: {}
+    name: Calories
+    description: "Pl: 1200 kcal"
+  carbs:
+    selector:
+      text: {}
+    name: Carbohydrates
+    description: "Pl: 150 g"
 
 ```
 
@@ -68,6 +80,8 @@ template:
         attributes:
           recept_neve: "{{ trigger.event.data.recipe_name }}"
           recept_szoveg: "{{ trigger.event.data.recipe_content }}"
+          kaloria: "{{ trigger.event.data.calories }}"
+          szenhidrat: "{{ trigger.event.data.carbs }}"
 
 ```
 
@@ -81,7 +95,11 @@ type: markdown
 content: >-
   ## 👨‍🍳 {{ state_attr('sensor.konyhai_recept', 'recept_neve') | default('Új recept', true) }}
 
-  {{ state_attr('sensor.konyhai_recept', 'recept_szoveg') | default('Még nincs megjelenítendő recept. Kérj egyet a hangasszisztenstől!', true) }}
+  > **📊 Tápérték (kb.):** > 🔥 {{ state_attr('sensor.konyhai_recept', 'kaloria') | default('?', true) }} | 🍞 {{ state_attr('sensor.konyhai_recept', 'szenhidrat') | default('?', true) }} 
+
+  ---
+
+  {{ state_attr('sensor.konyhai_recept', 'recept_szoveg') | default('Még nincs megjelenítendő recept.', true) }}
 
 ```
 
