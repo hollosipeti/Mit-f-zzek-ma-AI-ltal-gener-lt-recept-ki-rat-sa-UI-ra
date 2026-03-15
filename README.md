@@ -12,7 +12,7 @@ Ehhez egy eseményvezérelt (trigger-based) Template Senzort fogunk használni. 
 Nálunk kétfajta OpenAI Conversation van. Egy angol és egy magyar. Itt most a magyar OpenAI Conversation beállításait irom le. 
 Másold be ezt a szöveget az OpenAI Conversation integráció utasítás (prompt) mezőjébe:
 
-#### When the user asks for a food recipe, generate the complete recipe including ingredients and step-by-step instructions. You MUST use the available tool/script named 'Show recipe on ui' to pass the full text of this recipe to the dashboard. ####
+#### When the user asks for a food recipe, generate the complete recipe including ingredients and step-by-step instructions. You MUST use the available tool/script named 'Show recipe on ui' to pass the dish's name to the 'recipe_name' field, and the full text to the 'recipe_text' field. ####
 
 Ha akarod még kiegészítheted ezekkel is: 
 #### Important: Do NOT read the full recipe out loud. Verbally, you must reply ONLY with this short confirmation in Hungarian: "A kért receptet megjelenítettem a telefonodon." ####
@@ -26,14 +26,22 @@ Nálam így néz ki:
 Ezt fogja meghívni az OpenAI. A script annyit csinál, hogy fogadja a szöveget, és egy eseményként (event) elküldi a Home Assistant rendszerébe, amit majd a szenzor elkap. Ne felejtsd el bepipálni ezt a scriptet az OpenAI agent "Engedélyezett eszközök" (Exposed entities/tools) listájában!
 
 ```yaml
+
 alias: Show recipe on ui
-description: Ezt hívja meg az OpenAI, hogy átadja a receptet.
+description: Ezt hívja meg az OpenAI, hogy átadja a receptet és a nevét.
 sequence:
   - event: update_recipe_display
     event_data:
+      recipe_name: "{{ recipe_name }}"
       recipe_content: "{{ recipe_text }}"
 mode: single
 fields:
+  recipe_name:
+    selector:
+      text: {}
+    name: Recipe Name
+    description: The name of the dish (e.g., Brassói aprópecsenye).
+    required: true
   recipe_text:
     selector:
       text:
@@ -56,8 +64,9 @@ template:
     sensor:
       - name: "Konyhai Recept"
         unique_id: konyhai_recept_tarolo
-        state: "{{ now().strftime('%H:%M') }}"
+        state: "{{ now().strftime('%H:%M') }}" 
         attributes:
+          recept_neve: "{{ trigger.event.data.recipe_name }}"
           recept_szoveg: "{{ trigger.event.data.recipe_content }}"
 
 ```
@@ -69,9 +78,10 @@ A konyhai tableted/telefonod dashboardjára tegyél ki egy Markdown kártyát. E
 ```yaml
 
 type: markdown
-title: 👨‍🍳 Napi Recept
 content: >-
-  {{ state_attr('sensor.konyhai_recept', 'recept_szoveg') | default('Még nincs megjelenítendő recept. Kérj egyet a hangasszisztenstől!', true) }}
+  {{ state_attr('sensor.konyhai_recept', 'recept_neve') }} {{
+  state_attr('sensor.konyhai_recept', 'recept_szoveg') | default('Még nincs
+  megjelenítendő recept. Kérj egyet a hangasszisztenstől!', true) }}
 
 ```
 
