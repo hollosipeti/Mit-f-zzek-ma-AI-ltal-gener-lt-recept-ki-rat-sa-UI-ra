@@ -86,7 +86,7 @@ https://www.nosalty.hu/recept/rakott-burgonya-daralt-hussal
 
 <img src="5.jpg" width="40%"> <img src="2.jpg" width="40%">
 
-### Megjelenítés egy táblagépen (Fully Kiosk):  ### 
+## Megjelenítés egy táblagépen (Fully Kiosk):  ##
 
 Ez az automatizáció azt csinálja, hogy, ha recept érkezik bakapcsolja a kijelzőt ( nálam ki szokott kapcsolni ), és a lovelace-tablet/whatshouldIcooktoday oldalra vált, ahol megjeleníti a 4. pontban leírt type: markdown kártyát. 
 ### FONTOS: A device_id:, entity_id: és az URL címet ki kell cserélni a saját eszközödnek/url címednek megfelelőre! ###
@@ -111,7 +111,7 @@ actions:
 mode: single
 
 ```
-### Tettszik a recept? Küld el magadnak e-mailban. ### 
+## Tettszik a recept? Küld el magadnak e-mailban. ##
 
 ### 1. Lépés: E-mail küldő (SMTP) beállítása (configuration.yaml) ### 
 
