@@ -1,6 +1,8 @@
 # Mit főzzek ma. AI által generált recept kiíratása UI-ra. Ha tettszik küld el e-mailban.
 Garantáltan asszonyfaktor növelő elem a Home Assistantba :smile:
 
+### 👨‍🍳🍳🛒🥦🍎🥖🥛🧀🍖🥘🍳🍴🧂🥗🍝🥗🍕☕🍰🍪🧁 ###
+
 Nálunk a HA-ba már egy ideje be van integrálva az OpenAI. Próbálom sulykolni a családot, hogy használják, kérdezzenek tőle. Azt is mondtam a feleségemnek, hogy ha nincs ötlete, hogy mit főzzön kérdezze meg az AI-t, hogy van e valami jó ötlete. Ez idáig ok. Az AI elmondja a receptet, el is ismételheti, de szar mindig kérdezgetni, ha elfelejtesz valamit. Azt akartam megoldani, hogy a receptet a dashboard egy meghatározott helyére írja ki. Így főzés közben bármikor visszanézhető az utoljára kért recept. 
 
 Ehhez egy eseményvezérelt (trigger-based) Template Senzort fogunk használni. Ennek az a hatalmas előnye, hogy bármilyen hosszú szöveget be lehet tölteni.
